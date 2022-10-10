@@ -34,20 +34,43 @@ containerElementsGallery.addEventListener("click", onGalleryContainerClick);
 
  function onGalleryContainerClick(event){
     event.preventDefault();
-
     const isItemGallery = event.target.classList.contains("gallery__image");
 if (!isItemGallery){
     return;
 }
 console.log(event.target.dataset.source);
 
-modalWindowOriginal = basicLightbox.create(`
+const modalWindowOriginal = basicLightbox.create(`
 <img src="${event.target.dataset.source}">
 `);
+window.addEventListener('keydown', onEscapePress);
 modalWindowOriginal.show();
 
-}
 
+function onEscapePress(event){ 
+if (event.code === "Escape"||event == "mousedown"){
+    modalWindowOriginal.close();
+    window.removeEventListener('keydown', onEscapePress);
+}
+console.log(event.code);
+}
+};
+
+function silent() {window.removeEventListener('keydown', onEscapePress)};
+
+
+
+// modalWindowOriginal.close(() => console.log('lightbox not visible anymore'))
+// };
+// if (event.button === "click"){
+//     window.removeEventListener('keydown', onEscapePress);
+
+
+
+
+// onClose: (modalWindowOriginal) => {
+//     window.removeEventListener('keydown', onEscapePress);
+// }
 
 // const instance = basicLightbox.create(`
 //     <img src="assets/images/image.png" width="800" height="600">
@@ -55,7 +78,8 @@ modalWindowOriginal.show();
 
 // instance.show()
 
-
+// window.addEventListener('keydown', onEscapePress);
+// window.removeEventListener('keydown', onEscapePress)
 
 
 
